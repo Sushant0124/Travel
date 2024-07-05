@@ -120,3 +120,6 @@ wanderlust-api/
 ├── .env
 ├── package.json
 └── README.md
+
+![image](https://github.com/Sushant0124/WanderLust/assets/142045977/6d11da2d-b802-43cd-b097-14d73e5e8633)
+
