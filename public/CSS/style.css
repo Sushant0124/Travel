@@ -1,0 +1,143 @@
+.body {
+    font-family: "Plus Jakarta Sans", sans-serif !important; 
+    display:flex;
+    flex-direction: column;
+    min-height:300vh;
+}
+.container{
+    flex:1;
+}
+
+.navbar {
+    height: 5rem;
+    background-color: #fff;
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link {
+    color: #222222 !important;
+}
+
+.f-info-links {
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links:hover {
+    text-decoration: underline;
+}
+
+.f-info-links, .f-info-socials, .f-info .brand {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.f-info-socials i {
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.f-info {
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    border: none;
+    margin-bottom: 2rem;
+    width: 20rem; /* Moved from inline style */
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    height: 20rem !important; /* Moved from inline style */
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card-text p {
+    font-weight: 400;
+}
+
+.listing-link {
+    text-decoration: none;
+}
+
+.card-img-overlay {
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: #ebebeb;
+}
+.add-btn{
+    background-color:#fe424d !important;
+    border: none !important;
+}
+.show-img{
+    height:30vh;
+
+}
+.card {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    height: 300px;
+    object-fit: cover;
+}
+
+.card-title {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.card-text {
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+}
