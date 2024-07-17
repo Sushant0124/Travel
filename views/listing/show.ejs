@@ -1,26 +1,111 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<body>
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h3 class="text-center mb-4">Listing Details:</h3>
-                <div class="card">
-                    <img src="<%= list.image %>" class="card-img-top show-img" alt="Listing Image">
-                    <div class="card-body">
-                        <h4 class="card-title"><%= list.title %></h4>
-                        <p class="card-text"><%= list.description %></p>
-                        <p class="card-text"><strong>Price:</strong> &#8377;<%= list.price.toLocaleString("en-IN") %></p>
-                        <p class="card-text"><strong>Location:</strong> <%= list.location %></p>
-                        <p class="card-text"><strong>Country:</strong> <%= list.country %></p>
-                    </div>
+<script>
+    const mapToken = "<%= process.env.MAP_KEY %>";
+    const coordinates = <%- JSON.stringify(list.geometry.coordinates) %>;
+</script>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3 class="col-md-8 mb-4 offset-3"><b><%= list.title %></b></h3>
+            <div class="card col-md-8 offset-2">
+                <img src="<%= list.image.url %>" class="card-img-top show-img" alt="Listing Image">
+                <div class="card-body">
+                    <p clas="card-text"><i>Owned By: <%= list.owner.username %></i></p>
+                    <p class="card-text"><%= list.description %></p>
+                    <p class="card-text">&#8377;<%= list.price ? list.price.toLocaleString("en-IN") : "Price not available" %></p>
+                    <p class="card-text"><strong>Location:</strong> <%= list.location %></p>
+                    <p class="card-text"><strong>Country:</strong> <%= list.country %></p>
                 </div>
+            </div>
+            <% if (currUser && currUser._id.toString() === list.owner._id.toString()) { %>
                 <div class="d-flex justify-content-between mt-4">
                     <a href="/listings/<%= list._id %>/edit" class="btn btn-warning">Edit</a>
                     <form method="post" action="/listings/<%= list._id %>?_method=DELETE">
                         <button class="btn btn-danger">Delete</button>
                     </form>
                 </div>
-            </div>
+            <% } %>
         </div>
     </div>
-</body>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-3">
+            <hr />
+            <% if (currUser) { %>
+                <h4>Leave a Review</h4>
+                <form method="post" action="/listings/<%= list._id %>/reviews" novalidate class="needs-validation">
+                    <div class="mb-3 mt-3">
+                        <label for="rating" class="form-label">Rating</label>
+                        <fieldset class="starability-slot">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="comment" class="form-label">Comments</label>
+                        <textarea class="form-control" id="comment" name="review[comment]" rows="5" cols="30"></textarea>
+                        <div class="invalid-feedback">Please enter a comment</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr />
+            <% } %>
+            <% if (list.review.length > 0) { %>
+                <h4>All Reviews</h4>
+                <div class="row">
+                    <% for (let r of list.review) { %>
+                        <div class="card col-5 ms-3 mb-3">
+                            <div class="card-body">
+                                <p class="card-text"><i>Created by: <%= r.author.username %></i></p>
+                                <p class="card-text"><%= r.comment %></p>
+                                <p class="starability-result" data-rating=<%= r.rating %>> </p>
+                                <form class="mb-3" method="post" action="/listings/<%= list._id %>/reviews/<%= r._id %>?_method=DELETE">
+                                    <button type="submit" class="btn btn-sm btn-dark">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-3">
+            <h3>Where You Will Be</h3>
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+<!-- <script src="/js/map.js"></script> -->
+<script>
+    mapboxgl.accessToken = mapToken;
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        center: coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
+        zoom: 9 // starting zoom
+    });
+
+    // Set marker options.
+    const marker = new mapboxgl.Marker({
+        color: "red",
+        draggable: true
+    }).setLngLat(coordinates)
+      .addTo(map);
+
+      const popup = new mapboxgl.Popup({ offset: 25 })
+        .setHTML(`<h5>${list.title}</h5><p>${list.location}</p>`)
+        .setLngLat(coordinates)
+        .addTo(map);
+
+    // Attach the popup to the marker.
+    marker.setPopup(popup);
+</script>

@@ -1,11 +1,18 @@
-.body {
-    font-family: "Plus Jakarta Sans", sans-serif !important; 
-    display:flex;
-    flex-direction: column;
-    min-height:300vh;
+html, body {
+    height: 100%;
+    margin: 0;
 }
-.container{
-    flex:1;
+
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Fill the viewport height */
+}
+
+.container {
+    flex: 1;
+    margin-top: 10px; /* Added from previous code */
 }
 
 .navbar {
@@ -35,7 +42,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
 }
 
 .f-info-socials i {
@@ -50,19 +57,53 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 
 .card {
-    border: none;
+    border: none !important;
     margin-bottom: 2rem;
     width: 20rem; /* Moved from inline style */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Added from previous code */
+    border: 1px solid #ddd; /* Consolidated styles */
+    border-radius: 0.5rem; /* Consolidated styles */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Consolidated styles */
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Added from previous code */
+}
+
+.card-title {
+    font-weight: bold; /* Added from previous code */
+    margin-bottom: 1rem; /* Consolidated styles */
+    color: #333; /* Consolidated styles */
+}
+
+.card-text {
+    font-size: 1.2rem; /* Added from previous code */
+    color: #555; /* Consolidated styles */
+    margin-bottom: 1rem; /* Consolidated styles */
 }
 
 .card-img-top {
-    border-radius: 1rem !important;
-    width: 100% !important;
+    border-radius: 1rem !important; /* Moved from inline style */
+    width: 100% !important; /* Moved from inline style */
     height: 20rem !important; /* Moved from inline style */
-    object-fit: cover !important;
+    object-fit: cover !important; /* Moved from inline style */
+    border-top-left-radius: 0.5rem; /* Consolidated styles */
+    border-top-right-radius: 0.5rem; /* Consolidated styles */
+    height: 300px; /* Consolidated styles */
+}
+
+.listing-link {
+    text-decoration: none;
+    color: inherit; /* Added from previous code */
+}
+
+.listing-link:hover {
+    text-decoration: none; /* Added from previous code */
 }
 
 .card-body {
@@ -73,10 +114,6 @@
     font-weight: 400;
 }
 
-.listing-link {
-    text-decoration: none;
-}
-
 .card-img-overlay {
     opacity: 0;
 }
@@ -85,36 +122,14 @@
     opacity: 0.2;
     background-color: #ebebeb;
 }
-.add-btn{
-    background-color:#fe424d !important;
+
+.add-btn {
+    background-color: #fe424d !important;
     border: none !important;
 }
-.show-img{
-    height:30vh;
 
-}
-.card {
-    border: 1px solid #ddd;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-}
-
-.card-img-top {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    height: 300px;
-    object-fit: cover;
-}
-
-.card-title {
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.card-text {
-    color: #555;
-    margin-bottom: 1rem;
+.show-img {
+    height: 30vh;
 }
 
 .btn-warning {
@@ -141,3 +156,24 @@
     display: flex;
     justify-content: space-between;
 }
+
+footer {
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 576px) {
+    .card {
+        margin-bottom: 20px;
+    }
+}
+
+#map { 
+    height:400px;
+    width:130vh;
+ }

@@ -4,24 +4,43 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
     <h1>Create a new Listing</h1>
-    <form method="post" action="/listings">
+    <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
        <div> <label for="title" class="form-label">Title</label>
-        <input placeholder="enter title" type="text" name="listing[title]" class="form-control"></div>
+        <input placeholder="enter title" type="text" name="listing[title]" class="form-control" required>
+        <div class="invalid-feedback">
+          Plese enter the title!
+        </div>
+      </div>
        
       <div>  <label for="description" class="form-label">Description</label>
-        <textarea placeholder="Describe the place" type="text" name="listing[description]" class="form-control"></textarea>
+        <textarea placeholder="Describe the place" type="text" name="listing[description]" class="form-control" required></textarea>
+        <div class="invalid-feedback">
+          Plese enter a short description.!
+        </div>
     </div>
        
-       <div> <label for="image" class="form-label">Image URL/Link</label>
-        <input placeholder="enter image url" type="text" name="listing[image]" class="form-control"></div>
+       <div> <label for="image" class="form-label">Upload an image</label>
+        <input placeholder="Upload an image" type="file" name="listing[image]" class="form-control" required>
+        <div class="invalid-feedback">
+          Plese enter the right URL!
+        </div></div>
        <div class="row" >
        <div class="col-md-3"> <label for="price" class="form-label">Price</label>
-        <input placeholder="enter the price" type="number" name="listing[price]" class="form-control"></div>
+        <input placeholder="enter the price"  name="listing[price]" class="form-control"required >
+        <div class="invalid-feedback">
+          Plese enter the price!
+        </div></div>
         <div class="col"> <label for="country" class="form-label">Country</label>
-          <input placeholder="enter country" type="text" name="listing[country]" class="form-control"></div>
+          <input placeholder="enter country" type="text" name="listing[country]" class="form-control" required>
+          <div class="invalid-feedback">
+            Plese enter the country!
+          </div></div>
         </div>
       <div> <label for="location" class="form-label">Location</label>
-        <input placeholder="enter location" type="text" name="listing[location]" class="form-control"></div> 
+        <input placeholder="enter location" type="text" name="listing[location]" class="form-control"required>
+        <div class="invalid-feedback">
+          Plese enter the location!
+        </div></div> 
         <br>
         <button class="btn btn-dark add-btn">Add</button>
     </form>
