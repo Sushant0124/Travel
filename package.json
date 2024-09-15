@@ -6,8 +6,9 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "build": "npm install --legacy-peer-deps"
+     "prebuild": "npm cache clean --force",
+  "build": "npm install --legacy-peer-deps && npm install cloudinary@latest",
+  "start": "node app.js"
   },
   "keywords": [],
   "author": "",
