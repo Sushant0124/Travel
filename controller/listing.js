@@ -1,6 +1,6 @@
 const Listing = require("../models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
-const listingSchema = require("../schema.js");
+const {listingSchema} = require("../schema.js");
 const mbxGeocodimg = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_KEY;
 const   geocodingClient = mbxGeocodimg({ accessToken: mapToken });
@@ -18,25 +18,34 @@ const renderNewListingForm = (req, res) => {
 };
 
 const createNewListing = wrapAsync(async (req, res) => {
-    let response=await geocodingClient.forwardGeocode({
+    console.log('req.body:', req.body);
+console.log('req.body.listing:', req.body.listing);
+console.log('req.body.listing.category:', req.body.listing.category);
+    let response = await geocodingClient.forwardGeocode({
         query: req.body.listing.location,
         limit: 2
-      })
-        .send();
+    }).send();
 
-  
-       
-    let url=req.file.path;
-    let filename=req.file.filename;
+    let url = req.file.path;
+    let filename = req.file.filename;
+
     let newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image = {url,filename};
+    newListing.image = { url, filename };
     newListing.geometry = response.body.features[0].geometry;
-    let saved=await newListing.save();
+    console.log("come");
+
+    // Split the category string into an array
+    if (req.body.listing.category) {
+        newListing.category = req.body.listing.category.map(cat => cat.trim());
+    }
+
+    let saved = await newListing.save();
     console.log(saved);
     req.flash("success", "New List Created!");
     res.redirect("/listings");
 });
+
 
 const renderEditListingForm = wrapAsync(async (req, res) => {
     let { id } = req.params;
@@ -52,19 +61,30 @@ const renderEditListingForm = wrapAsync(async (req, res) => {
 
 const updateListing = wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let newlisting=await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    
-    if(typeof req.file!=="undefined"){
-        console.log(req.file);
-        let url=req.file.path;
-    let filename=req.file.filename;
-        newlisting.image={url,filename};
-        await newlisting.save();
+
+    // Update listing with the data from the form
+    let updatedListing = await Listing.findByIdAndUpdate(id, { ...req.body.listing }, { new: true });
+
+    // Handle category input - split the comma-separated string into an array
+    if (req.body.listing.category) {
+        updatedListing.category = req.body.listing.category.split(',').map(cat => cat.trim());
     }
-   
+
+    // Handle image upload
+    if (req.file) {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        updatedListing.image = { url, filename };
+    }
+
+    // Save any changes made to the listing
+    await updatedListing.save();
+
+    // Flash success message and redirect back to the listing
     req.flash("success", "List Updated!");
     res.redirect(`/listings/${id}`);
 });
+
 
 const deleteListing = wrapAsync(async (req, res) => {
     let { id } = req.params;
@@ -150,13 +170,20 @@ const search = async (req, res, next) => {
 
 
 const validatelisting = (req, res, next) => {
-    let result = listingSchema.validate(req.body.listing.message);
-    if (result.error) {
-        console.log(result.error);
-        throw new ExpressError(400, "Bad Request");
-    } else {
-        next();
+console.log('req.body:', req.body);
+console.log('req.body.listing:', req.body.listing);
+console.log('req.body.listing.category:', req.body.listing.category);
+    if (typeof req.body.listing.category === 'string') {
+        req.body.listing.category = req.body.listing.category.split(',').map(cat => cat.trim());
+      }
+    console.log(listingSchema);
+    const { error } = listingSchema.validate(req.body); // Validate req.body.listing
+    if (error) {
+        console.log(error);
+        req.flash('error', error.details.map(e => e.message).join(', '));
+        return res.redirect('/listings/new');
     }
+    next();
 };
 
 module.exports = {

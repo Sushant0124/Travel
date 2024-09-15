@@ -1,57 +1,71 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
   
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h3>Edit the listing</h3>
-                <form method="post" action="/listings/<%= list._id %>?_method=PUT" novalidate class="needs-validation"  enctype="multipart/form-data">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3>Edit the listing</h3>
+            <form method="post" action="/listings/<%= list._id %>?_method=PUT" novalidate class="needs-validation"  enctype="multipart/form-data">
 
-                    <div>
-                        <label for="title" class="form-label">Title</label>
-                        <input placeholder="enter title" value="<%=list.title %>" name="listing[title]" class="form-control" required>
+                <div>
+                    <label for="title" class="form-label">Title</label>
+                    <input placeholder="enter title" value="<%=list.title %>" name="listing[title]" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please enter the title!
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="description" class="form-label">Description</label>
+                    <textarea placeholder="Describe the place" name="listing[description]" class="form-control" required><%= list.description %></textarea>
+                    <div class="invalid-feedback">
+                        Please enter a short description!
+                    </div>
+                </div>
+
+                <p>Original image</p>
+                <img src="<%= orignalUrl %>" alt="image">
+                <div>
+                    <label for="image" class="form-label">Upload an image</label>
+                    <input placeholder="Upload an image" type="file" name="listing[image]" class="form-control">
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input placeholder="enter the price" value="<%=list.price %>" name="listing[price]" class="form-control" required>
                         <div class="invalid-feedback">
-                            Please enter the title!
+                            Please enter the price!
                         </div>
                     </div>
-                    <div>
-                        <label for="description" class="form-label">Description</label>
-                        <textarea placeholder="Describe the place" name="listing[description]" class="form-control" required><%= list.description %></textarea>
+                    <div class="col">
+                        <label for="country" class="form-label">Country</label>
+                        <input placeholder="enter country" value="<%=list.country %>" name="listing[country]" class="form-control" required>
                         <div class="invalid-feedback">
-                            Please enter a short description!
+                            Please enter the country!
                         </div>
                     </div>
-                    <p>Orignal image</p>
-                    <img src="<%= orignalUrl %>" alt="image">
-                    <div> <label for="image" class="form-label">Upload an image</label>
-                        <input placeholder="Upload an image" type="file" name="listing[image]" class="form-control" >
-                        </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input placeholder="enter the price" value="<%=list.price %>" name="listing[price]" class="form-control" required>
-                            <div class="invalid-feedback">
-                                Please enter the price!
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label for="country" class="form-label">Country</label>
-                            <input placeholder="enter country" value="<%=list.country %>" name="listing[country]" class="form-control" required>
-                            <div class="invalid-feedback">
-                                Please enter the country!
-                            </div>
-                        </div>
+                </div>
+
+                <div>
+                    <label for="location" class="form-label">Location</label>
+                    <input placeholder="enter location" value="<%=list.location %>" name="listing[location]" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please enter the location!
                     </div>
-                    <div>
-                        <label for="location" class="form-label">Location</label>
-                        <input placeholder="enter location" value="<%=list.location %>" name="listing[location]" class="form-control" required>
-                        <div class="invalid-feedback">
-                            Please enter the location!
-                        </div>
+                </div>
+
+                <div>
+                    <label for="category" class="form-label">Category</label>
+                    <input placeholder="enter categories (comma-separated)" value="<%=list.category.join(', ') %>" name="listing[category]" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please enter the categories!
                     </div>
-                    <br>
-                    <button class="btn btn-dark add-btn">Edit</button>
-                </form>
-            </div>
+                </div>
+                
+                <br>
+                <button class="btn btn-dark add-btn">Edit</button>
+            </form>
         </div>
-    
+    </div>
+  
 </body>

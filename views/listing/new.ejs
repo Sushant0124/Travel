@@ -1,50 +1,70 @@
-<% layout("/layouts/boilerplate.ejs")%>
+<% layout("/layouts/boilerplate.ejs") %>
+
 <body>
+  
+
   <div class="container">
+    <h2>Create a New Listing</h2>
     <div class="row justify-content-center">
-        <div class="col-md-8">
-    <h1>Create a new Listing</h1>
-    <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
-       <div> <label for="title" class="form-label">Title</label>
-        <input placeholder="enter title" type="text" name="listing[title]" class="form-control" required>
-        <div class="invalid-feedback">
-          Plese enter the title!
-        </div>
+      <div class="col-md-8">
+        <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+
+          <!-- Title -->
+          <div>
+            <label for="title" class="form-label">Title</label>
+            <input placeholder="Enter title" type="text" name="listing[title]" id="title" class="form-control" required>
+            <div class="invalid-feedback">Please enter the title!</div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label for="description" class="form-label">Description</label>
+            <textarea placeholder="Describe the place" name="listing[description]" id="description" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please enter a short description!</div>
+          </div>
+
+          <!-- Image Upload -->
+          <div>
+            <label for="image" class="form-label">Upload an image</label>
+            <input type="file" name="listing[image]" id="image" class="form-control" required>
+            <div class="invalid-feedback">Please upload the image!</div>
+          </div>
+
+          <!-- Price and Country (in a row) -->
+          <div class="row">
+            <div class="col-md-3">
+              <label for="price" class="form-label">Price</label>
+              <input placeholder="Enter the price" type="number" name="listing[price]" id="price" class="form-control" required>
+              <div class="invalid-feedback">Please enter the price!</div>
+            </div>
+
+            <div class="col">
+              <label for="country" class="form-label">Country</label>
+              <input placeholder="Enter country" type="text" name="listing[country]" id="country" class="form-control" required>
+              <div class="invalid-feedback">Please enter the country!</div>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div>
+            <label for="location" class="form-label">Location</label>
+            <input placeholder="Uttar Pradesh, India" type="text" name="listing[location]" id="location" class="form-control" required>
+            <div class="invalid-feedback">Please enter the location!</div>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label for="category" class="form-label">Category</label>
+            <input placeholder="E.g. Mountains, TreeHouse, etc." type="text" name="listing[category]" id="category" class="form-control" required>
+            <div class="invalid-feedback">Please enter categories separated by commas!</div>
+          </div>
+
+          <!-- Submit Button -->
+          <br>
+          <button type="submit" class="btn btn-dark add-btn">Add</button>
+          
+        </form>
       </div>
-       
-      <div>  <label for="description" class="form-label">Description</label>
-        <textarea placeholder="Describe the place" type="text" name="listing[description]" class="form-control" required></textarea>
-        <div class="invalid-feedback">
-          Plese enter a short description.!
-        </div>
     </div>
-       
-       <div> <label for="image" class="form-label">Upload an image</label>
-        <input placeholder="Upload an image" type="file" name="listing[image]" class="form-control" required>
-        <div class="invalid-feedback">
-          Plese enter the right URL!
-        </div></div>
-       <div class="row" >
-       <div class="col-md-3"> <label for="price" class="form-label">Price</label>
-        <input placeholder="enter the price"  name="listing[price]" class="form-control"required >
-        <div class="invalid-feedback">
-          Plese enter the price!
-        </div></div>
-        <div class="col"> <label for="country" class="form-label">Country</label>
-          <input placeholder="enter country" type="text" name="listing[country]" class="form-control" required>
-          <div class="invalid-feedback">
-            Plese enter the country!
-          </div></div>
-        </div>
-      <div> <label for="location" class="form-label">Location</label>
-        <input placeholder="enter location" type="text" name="listing[location]" class="form-control"required>
-        <div class="invalid-feedback">
-          Plese enter the location!
-        </div></div> 
-        <br>
-        <button class="btn btn-dark add-btn">Add</button>
-    </form>
-    </div>
-    </div>
-    </div>
+  </div>
 </body>
