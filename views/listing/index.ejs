@@ -5,6 +5,10 @@
     flex-wrap: wrap;
     align-items: center;
   }
+  a{
+    color:grey;
+    text-decoration: none;
+  }
   .filter {
     text-align: center;
     margin-right: 2rem;
@@ -32,46 +36,46 @@
   }
 </style>
 <div id="filters">
-  <div class="filter">
+  <a href="/listings/filter/trending" class="filter">
     <div><i class="fa-solid fa-fire"></i></div>
     <p>Trending</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/mountains" class="filter">
     <div><i class="fa-solid fa-mountain"></i></div>
     <p>Mountains</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/rooms" class="filter">
     <div><i class="fa-solid fa-bed"></i></div>
     <p>Rooms</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/palace" class="filter">
     <div><i class="fa-brands fa-fort-awesome"></i></div>
     <p>Palace</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/beach" class="filter">
     <div><i class="fa-solid fa-umbrella-beach"></i></div>
     <p>Beach</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/treehouse" class="filter">
     <div><i class="fa-solid fa-tree-city"></i></div>
     <p>Tree House</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/farms" class="filter">
     <div><i class="fa-solid fa-cow"></i></div>
     <p>Farms</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/iconic-cities" class="filter">
     <div><i class="fa-solid fa-city"></i></div>
     <p>Iconic cities</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/arctic" class="filter">
     <div><i class="fa-regular fa-snowflake"></i></div>
     <p>Arctic</p>
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings/filter/ocean" class="filter">
     <div><i class="fa-solid fa-earth-oceania"></i></div>
     <p>Ocean</p>
-  </div>
+  </a>
 
   <div class="tax-toggle">
     <div class="form-check form-switch form-check-reverse">
@@ -91,6 +95,7 @@
           <h5 class="card-title text-primary"><%= list.title %></h5>
           <p class="card-text text-muted">&#8377;<%= list.price ? list.price.toLocaleString("en-IN") : "Price not available" %>
           <i class="tax-info">&nbsp; &nbsp;+18%GST</i></p>
+          <button type="button" class="btn btn-primary">Pay Now</button>
         </div>
       </a>
     </div>

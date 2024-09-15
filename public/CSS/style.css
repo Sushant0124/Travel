@@ -29,6 +29,8 @@ body {
     color: #222222 !important;
 }
 
+
+
 .f-info-links {
     text-decoration: none;
     color: #222222;
@@ -177,3 +179,5 @@ footer {
     height:400px;
     width:130vh;
  }
+
+ /* filters ------------------------------------------------------------------------------------- */

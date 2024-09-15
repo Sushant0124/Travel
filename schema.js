@@ -1,21 +1,28 @@
-const Joi=require("joi");
-const listingSchema = Joi.object({
-    listing: Joi.object({
-        title: Joi.string().required(),
-        description: Joi.string().optional(),
-        image: Joi.string().uri().optional(),
-        price: Joi.number().optional(),
-        location: Joi.string().optional(),
-        country: Joi.string().optional()
-    }).required()
-});
-const reviewSchema=Joi.object({
-    review:Joi.object({
-        rating:Joi.number().required().min(0).max(5),
-        comment:Joi.string().required(),
+const Joi = require("joi");
 
-
-    }).required(),
+module.exports.listingSchema = Joi.object({
+	listing: Joi.object({
+		title: Joi.string().required(),
+		description: Joi.string().required(),
+		country: Joi.string().required(),
+		location: Joi.string().required(),
+		price: Joi.number().required().min(0),
+		image: Joi.string().allow("", null),
+		category: Joi.allow(""),
+	}).required(),
 });
-module.exports=listingSchema;
-module.exports=reviewSchema;
+
+module.exports.reviewSchema = Joi.object({
+	review: Joi.object({
+		rating: Joi.number().required().min(1).max(5),
+		comment: Joi.string().required(),
+	}).required(),
+});
+
+module.exports.userSchema = Joi.object({
+    fName: Joi.string().required().trim(),
+    lName: Joi.string().allow("",null),
+    username: Joi.string().required(),
+	email: Joi.string().required().email(),
+    password: Joi.string().min(8),
+});

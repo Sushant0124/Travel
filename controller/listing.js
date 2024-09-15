@@ -84,6 +84,71 @@ const showListing = wrapAsync(async (req, res) => {
     res.render("listing/show.ejs", { list });
 });
 
+const filter= wrapAsync(async (req, res) => {
+    // const listings = await Listing.find();
+    // console.log(listings);
+    let { id } = req.params;
+    console.log(id);
+	let listings = await Listing.find({ category: { $in: [new RegExp(`^${id}$`, "i")] } });
+	console.log(listings);
+	if (listings.length != 0) {
+		res.locals.success = `Listings Find by ${id}`;
+		res.render("listing/index.ejs", { listings });
+	} else {
+		req.flash("error", "Listings is not here !!!");
+		res.redirect("/listings");
+	}
+    
+});
+const search = async (req, res, next) => {
+    console.log("Search function called");
+    console.log("Query params:", req.query);
+    try {
+        let input = req.query.q;
+        console.log("Raw input:", input);
+        
+        if (!input) {
+            console.log("Empty search input");
+            return res.status(400).json({ error: "Search value empty" });
+        }
+
+        input = input.trim().replace(/\s+/g, " ");
+        console.log("Processed input:", input);
+
+        let element = input
+            .split(" ")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(" ");
+        console.log("Formatted element:", element);
+
+        const intValue = parseInt(element, 10);
+        const isNumber = !isNaN(intValue);
+        console.log("Is number:", isNumber, "Int value:", intValue);
+
+        const query = {
+            $or: [
+                { title: { $regex: element, $options: "i" } },
+                { category: { $regex: element, $options: "i" } },
+                { country: { $regex: element, $options: "i" } },
+                { location: { $regex: element, $options: "i" } },
+                ...(isNumber ? [{ price: { $lte: intValue } }] : [])
+            ]
+        };
+        console.log("MongoDB query:", JSON.stringify(query, null, 2));
+
+        const listings = await Listing.find(query).sort({ _id: -1 });
+        console.log("Number of results:", listings.length);
+        res.render("listing/index.ejs", { listings });
+
+        return res.json(listings);
+    } catch (err) {
+        console.error("Error in search function:", err);
+        next(err); // Pass the error to the error handling middleware
+    }
+};
+
+
+
 const validatelisting = (req, res, next) => {
     let result = listingSchema.validate(req.body.listing.message);
     if (result.error) {
@@ -102,5 +167,7 @@ module.exports = {
     updateListing,
     deleteListing,
     showListing,
-    validatelisting
+    validatelisting,
+    filter,
+    search
 };
