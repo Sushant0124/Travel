@@ -1,14 +1,13 @@
 {
   "engines": {
-    "node": "20.x"
+    "node": "18.20.0"
   },
   "name": "project1",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-     "prebuild": "npm cache clean --force",
-  "build": "npm install --legacy-peer-deps && npm install cloudinary@latest",
-  "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "npm install --legacy-peer-deps && npm run build"
   },
   "keywords": [],
   "author": "",
