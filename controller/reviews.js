@@ -1,7 +1,7 @@
 const Listing = require("../models/listing.js");
 const Review = require("../models/reviews.js");
 const ExpressError = require("../utils/ExpressError.js");
-const reviewSchema = require("../schema.js");
+const {reviewSchema} = require("../schema.js");
 
 const wrapAsync = require("../utils/wrapAsync.js");
 
