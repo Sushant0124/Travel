@@ -14,7 +14,7 @@ router.route("/")
     .get(listingController.getAllListings)
     .post(isloggedin, upload.single('listing[image]'), listingController.validatelisting, listingController.createNewListing);
 
-router.get("/filter/:id", isloggedin, listingController.filter);
+router.get("/filter/:id", listingController.filter);
 
 // Place parameterized routes last
 router.route("/:id")

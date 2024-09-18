@@ -42,10 +42,41 @@ const logoutUser = (req, res, next) => {
     });
 };
 
+
+
+const guestUser = wrapAsync(async (req, res, next) => {
+    try {
+        const guestUsername = `Guest_${Date.now()}`;
+        const guestEmail = `${guestUsername}@guest.com`;
+        const guestPassword = Math.random().toString(36).slice(-8);
+
+        const newUser = new User({
+            username: guestUsername,
+            email: guestEmail,
+            // isGuest: true
+        });
+
+        const registeredUser = await User.register(newUser, guestPassword);
+
+        req.login(registeredUser, (err) => {
+            if (err) { return next(err); }
+            req.flash('success', 'Logged in as a guest user');
+            res.redirect('/listings');
+        });
+    } catch (e) {
+        console.error('Error creating guest user:', e);
+        req.flash('error', 'Unable to create guest user');
+        res.redirect('/login');
+    }
+});
+
+
 module.exports = {
     renderSignupForm,
     signupUser,
     renderLoginForm,
     loginUser,
-    logoutUser
+    logoutUser,
+    
+    guestUser
 };

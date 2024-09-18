@@ -16,4 +16,8 @@ router.route('/login')
     }), usersController.loginUser);
 
 router.get('/logout', usersController.logoutUser);
+
+router.route('/guest')
+.get(usersController.guestUser);
+
 module.exports = router;
