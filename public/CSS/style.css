@@ -128,6 +128,7 @@ body {
 .add-btn {
     background-color: #fe424d !important;
     border: none !important;
+    margin-bottom: 0.5rem !important;
 }
 
 .show-img {
