@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const razorpay = require('../init/razopay'); // Correct the filename path
 const crypto = require('crypto');
+const { isloggedin, isOwner } = require("../middleware.js");
 require('dotenv').config(); // Ensure dotenv is loaded
 
 // Create Order Route
-router.post('/create-order', async (req, res) => {
+router.post('/create-order',isloggedin, async (req, res) => {
     const { amount, currency } = req.body;
     console.log(`Received amount: ${amount}, currency: ${currency}`); // Expecting amount and currency from the client
 
@@ -26,7 +27,7 @@ router.post('/create-order', async (req, res) => {
 });
 
 // Verify Payment Route
-router.post('/verify-payment', (req, res) => {
+router.post('/verify-payment', isloggedin,(req, res) => {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
     try {
