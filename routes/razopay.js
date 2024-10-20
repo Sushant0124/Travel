@@ -11,7 +11,7 @@ router.post('/create-order', async (req, res) => {
 
     try {
         const options = {
-            amount: amount , // Convert amount to smallest currency unit (paisa)
+            amount: amount*100, // Convert amount to smallest currency unit (paisa)
             currency: currency,
             receipt: `receipt_order_${Date.now()}`
         };
